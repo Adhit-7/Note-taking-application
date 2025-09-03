@@ -59,3 +59,36 @@ In the `backend` directory, you can run the Laravel project.
 ```bash
 git clone <repository-url>
 cd backend
+
+## Run locally (development)
+
+### Backend
+1. `cd Notes_taking_app_code/backend`
+2. `composer install`
+3. `cp .env.example .env` and update DB and APP_URL
+4. `php artisan key:generate`
+5. `php artisan jwt:secret`
+6. `php artisan migrate --seed`
+7. `php artisan serve --port=8000`
+
+API base: `http://127.0.0.1:8000/api`
+
+### Frontend
+1. `cd Notes_taking_app_code/react-notes-frontend`
+2. `cp .env.example .env` (set `VITE_API_BASE` to `http://127.0.0.1:8000/api`)
+3. `npm install`
+4. `npm run dev`
+5. Open `http://127.0.0.1:5173`
+
+## Production build
+- `npm run build` (in frontend), copy `dist` to Laravel `public/react`, set `vite.config.js` base to `/react/`, add catch-all route to `routes/web.php`.
+
+## Notes for grader
+- JWT token is saved in `localStorage`.
+- CORS enabled for `http://localhost:5173` (dev).
+- API endpoints: `/api/register`, `/api/login`, `/api/logout`, `/api/user`, `/api/categories`, `/api/notes`.
+
+## Troubleshooting
+- If `APP_KEY` missing: run `php artisan key:generate`.
+- If token errors: run `php artisan jwt:secret`.
+- DB issues: check `.env` DB settings.
